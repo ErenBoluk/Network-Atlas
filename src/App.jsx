@@ -38,6 +38,7 @@ function Sidebar({ view, category, progress, stats, onNavigate, onCategory, onCl
   return <div className="sidebar-content">
     <a className="brand" href="#" onClick={event => { event.preventDefault(); onNavigate('roadmap') }} aria-label="Network Atlas ana sayfa"><span className="brand-mark"><Layers size={24} strokeWidth={1.7} /></span><span>network<span className="brand-light">atlas</span><small>BAĞLANTILARIN ÖTESİNDE.</small></span></a>
     {onClose && <button className="mobile-close icon-button" aria-label="Menüyü kapat" onClick={onClose}><X size={20} /></button>}
+    <div className="sidebar-scroll">
     <div className="workspace-label">ÇALIŞMA ALANIN</div>
     <nav className="primary-nav" aria-label="Ana gezinme">{views.map(({ id, label, Icon }) => <button key={id} className={view === id ? 'active' : ''} aria-current={view === id ? 'page' : undefined} onClick={() => onNavigate(id)}><Icon size={19} strokeWidth={1.7} /><span>{label}</span>{id === 'saved' && progress.bookmarks.length > 0 && <span className="nav-count">{progress.bookmarks.length}</span>}{id === 'roadmap' && <ChevronRight size={15} className="nav-chevron" />}</button>)}</nav>
     <div className="stage-nav-header"><span>ÖĞRENME AŞAMALARI</span><span>{stages.length}</span></div>
@@ -46,8 +47,9 @@ function Sidebar({ view, category, progress, stats, onNavigate, onCategory, onCl
       const complete = stageTopics.every(topic => progress.statuses[topic.id] === 'done')
       return <button key={stage.id} className={view === 'roadmap' && category === stage.id ? 'selected' : ''} aria-pressed={view === 'roadmap' && category === stage.id} onClick={() => onCategory(stage.id)}><span className="stage-nav-number">{complete ? <Check size={13} /> : stage.number}</span><span>{stage.title}</span><span className="stage-nav-dot" data-done={complete} /></button>
     })}</nav>
+    </div>
     <div className="sidebar-bottom">
-      <div className="sidebar-progress"><div className="flex items-center gap-2"><span className="mini-cap"><GraduationCap size={17} /></span><span>Her gün bir adım.</span><strong>%{stats.percent}</strong></div><div className="progress-track"><span style={{ width: `${stats.percent}%` }} /></div><p>{stats.completed} / {stats.total} konu tamamlandı</p></div>
+      <div className="sidebar-progress"><div className="flex items-center gap-2"><span className="mini-cap"><GraduationCap size={17} /></span><span className="sidebar-progress-title">Her gün bir adım.</span><strong>%{stats.percent}</strong></div><div className="progress-track"><span style={{ width: `${stats.percent}%` }} /></div><p>{stats.completed} / {stats.total} konu tamamlandı</p></div>
       <a className="source-sidebar" href={sourceRoadmap} target="_blank" rel="noopener noreferrer"><span className="source-logo">r.</span><span>roadmap.sh’den ilhamla<small>Öğrenmek için tasarlandı.</small></span><ArrowUpRight size={15} /></a>
     </div>
   </div>
